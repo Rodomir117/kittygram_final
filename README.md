@@ -18,39 +18,49 @@
 ## Запуск проекта на удаленном сервере
 
 1. Установить docker compose на сервер:
- ```bash
-    sudo apt update
-    sudo apt install curl
-    curl -fSL https://get.docker.com -o get-docker.sh
-    sudo sh ./get-docker.sh
-    sudo apt-get install docker-compose-plugin
+```bash
+sudo apt update
+```
+```bash
+sudo apt install curl
+```
+```bash
+curl -fSL https://get.docker.com -o get-docker.sh
+```
+```bash
+sudo sh ./get-docker.sh
+```
+```bash    
+sudo apt-get install docker-compose-plugin
 ```
 
 2. Скачать файл [docker-compose.production.yml](https://github.com/rodomir117/kittygram_final/blob/main/docker-compose.production.yml) на свой сервер.
 
 3. На сервере в директории с файлом **docker-compose.production.yml** создать файл  **.env**:
 ``` bash    
-    POSTGRES_DB=имя базы
-    POSTGRES_USER=владелец базы
-    POSTGRES_PASSWORD=пароль базы
-    DB_HOST=db
-    DB_PORT=5432
-    SECRET_KEY=ключ приложения django
-    DEBUG=True/False
-    ALLOWED_HOSTS=разрешенные хосты(your.domain.com)
+POSTGRES_DB=имя базы
+POSTGRES_USER=владелец базы
+POSTGRES_PASSWORD=пароль базы
+DB_HOST=db
+DB_PORT=5432
+SECRET_KEY=ключ приложения django
+DEBUG=True/False
+ALLOWED_HOSTS=разрешенные хосты(your.domain.com)
 ```        
 4. Запустить Docker compose:
 ``` bash
-    sudo docker compose -f docker-compose.production.yml pull
-    sudo docker compose -f docker-compose.production.yml down
-    sudo docker compose -f docker-compose.production.yml up -d
+sudo docker compose -f docker-compose.production.yml up -d
 ```
 
 5. Собрать статику и применить миграции
 ``` bash
-    sudo docker compose -f docker-compose.yml exec backend python manage.py migrate
-    sudo docker compose -f docker-compose.yml exec backend python manage.py collectstatic
-    sudo docker compose -f docker-compose.yml exec backend cp -r /app/collected_static/. /backend_static/static/
+sudo docker compose -f docker-compose.production.yml exec backend python manage.py migrate
+```
+``` bash
+sudo docker compose -f docker-compose.production.yml exec backend python manage.py collectstatic
+```
+``` bash
+sudo docker compose -f docker-compose.production.yml exec backend cp -r /app/collected_static/. /backend_static/static/
 ```
 
 ## Автор
