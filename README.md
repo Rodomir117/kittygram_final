@@ -1,4 +1,4 @@
-[![Main Taski workflow](https://github.com/rodomir117/kittygram_final/actions/workflows/main.yml/badge.svg)](https://github.com/rodomir117/kittygram_final/actions/workflows/main.yml)
+[![Main Kittygram workflow](https://github.com/rodomir117/kittygram_final/actions/workflows/main.yml/badge.svg)](https://github.com/rodomir117/kittygram_final/actions/workflows/main.yml)
 # Проект: Kittygram
 ### Учебный проект *Яндекс.Практикум* курса Python-разработчик(backend)
 
@@ -50,17 +50,6 @@ ALLOWED_HOSTS=разрешенные хосты(your.domain.com)
 4. Запустить Docker compose:
 ``` bash
 sudo docker compose -f docker-compose.production.yml up -d
-```
-
-5. Собрать статику и применить миграции
-``` bash
-sudo docker compose -f docker-compose.production.yml exec backend python manage.py migrate
-```
-``` bash
-sudo docker compose -f docker-compose.production.yml exec backend python manage.py collectstatic
-```
-``` bash
-sudo docker compose -f docker-compose.production.yml exec backend cp -r /app/collected_static/. /backend_static/static/
 ```
 
 ## Автор

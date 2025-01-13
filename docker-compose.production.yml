@@ -17,7 +17,9 @@ services:
       - db
     volumes:
       - static:/backend_static
-      - media:/media
+      - media:/app/media
+    entrypoint: ["/entrypoint.prod.sh"]
+    command: ["gunicorn", "--bind", "0.0.0.0:9000", "kittygram_backend.wsgi"]    
   frontend:
     image: rodomir117/kittygram_frontend
     env_file: .env
