@@ -51,6 +51,31 @@ ALLOWED_HOSTS=разрешенные хосты(your.domain.com)
 ``` bash
 sudo docker compose -f docker-compose.production.yml up -d
 ```
+5. На сервере настроить и запустить Nginx:
+- открыть файлы конфигурации
+    ``` bash
+    sudo nano /etc/nginx/sites-enabled/default
+    ```
+- внести изменения, заменив **<your.domain.com>** на свое доменное имя
+    ``` bash 
+    server {
+        listen 80;
+        server_name <your.domain.com>;
 
-## Автор
-[**Виталий Васюков**](https://github.com/Rodomir117)
+        location / {
+            proxy_set_header Host $http_host;        
+            proxy_pass http://127.0.0.1:9000;
+            client_max_body_size 20M;
+        }
+    }
+    ``` 
+- убедиться, что в файле конфигурации нет ошибок
+    ``` bash
+    sudo nginx -t
+    ```
+- перезагрузить конфигурацию
+    ``` bash
+    sudo service nginx reload
+    ```
+
+## Автор проекта [**Виталий Васюков**](https://github.com/Rodomir117)
