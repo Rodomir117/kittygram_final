@@ -81,7 +81,9 @@ jobs:
         with:
           context: ./backend/
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/kittygram_backend:latest
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/kittygram_backend:${{ github.sha }}
+            ${{ secrets.DOCKER_USERNAME }}/kittygram_backend:latest
 
   frontend_tests:
     runs-on: ubuntu-latest
@@ -119,7 +121,9 @@ jobs:
         with:
           context: ./frontend/
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/kittygram_frontend:latest
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/kittygram_frontend:${{ github.sha }}
+            ${{ secrets.DOCKER_USERNAME }}/kittygram_frontend:latest
 
   build_gateway_and_push_to_docker_hub:
     name: Push gateway Docker image to DockerHub
@@ -139,7 +143,9 @@ jobs:
         with:
           context: ./nginx/
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/kittygram_gateway:latest
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/kittygram_gateway:${{ github.sha }}
+            ${{ secrets.DOCKER_USERNAME }}/kittygram_gateway:latest
 
   deploy:
     runs-on: ubuntu-latest
@@ -171,8 +177,7 @@ jobs:
             sudo docker compose -f docker-compose.production.yml pull
             sudo docker compose -f docker-compose.production.yml down
             sudo docker compose -f docker-compose.production.yml up -d
-      - name: Clean up unused Docker images
-        run: sudo docker image prune -af
+            sudo docker image prune -af
 
   send_message:
     runs-on: ubuntu-latest
